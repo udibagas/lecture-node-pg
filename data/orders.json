@@ -1,0 +1,142 @@
+[
+  {
+    "date": "2023-06-13",
+    "productName": "Wine - White, French Cross",
+    "quantity": 18,
+    "productPrice": 93732,
+    "CustomerId": 3
+  },
+  {
+    "date": "2023-10-08",
+    "productName": "Truffle - Peelings",
+    "quantity": 38,
+    "productPrice": 68634,
+    "CustomerId": 2
+  },
+  {
+    "date": "2023-09-07",
+    "productName": "Allspice - Jamaican",
+    "quantity": 64,
+    "productPrice": 31150,
+    "CustomerId": 5
+  },
+  {
+    "date": "2023-03-10",
+    "productName": "Soup - Campbells Asian Noodle",
+    "quantity": 54,
+    "productPrice": 8454,
+    "CustomerId": 4
+  },
+  {
+    "date": "2023-11-14",
+    "productName": "Soup - Cream Of Potato / Leek",
+    "quantity": 96,
+    "productPrice": 13568,
+    "CustomerId": 4
+  },
+  {
+    "date": "2023-11-30",
+    "productName": "Apples - Sliced / Wedge",
+    "quantity": 27,
+    "productPrice": 75408,
+    "CustomerId": 5
+  },
+  {
+    "date": "2023-08-16",
+    "productName": "Beer - Labatt Blue",
+    "quantity": 57,
+    "productPrice": 49620,
+    "CustomerId": 3
+  },
+  {
+    "date": "2023-08-20",
+    "productName": "Bag - Regular Kraft 20 Lb",
+    "quantity": 38,
+    "productPrice": 23699,
+    "CustomerId": 5
+  },
+  {
+    "date": "2023-08-22",
+    "productName": "Cookie - Oreo 100x2",
+    "quantity": 29,
+    "productPrice": 64210,
+    "CustomerId": 3
+  },
+  {
+    "date": "2023-01-21",
+    "productName": "Potatoes - Pei 10 Oz",
+    "quantity": 4,
+    "productPrice": 85730,
+    "CustomerId": 4
+  },
+  {
+    "date": "2023-04-07",
+    "productName": "Chicken - Breast, 5 - 7 Oz",
+    "quantity": 3,
+    "productPrice": 18641,
+    "CustomerId": 1
+  },
+  {
+    "date": "2023-06-28",
+    "productName": "Bagel - Plain",
+    "quantity": 52,
+    "productPrice": 68517,
+    "CustomerId": 4
+  },
+  {
+    "date": "2023-05-18",
+    "productName": "Glycerine",
+    "quantity": 53,
+    "productPrice": 86339,
+    "CustomerId": 1
+  },
+  {
+    "date": "2023-07-13",
+    "productName": "Coffee - Decaffeinato Coffee",
+    "quantity": 47,
+    "productPrice": 28227,
+    "CustomerId": 1
+  },
+  {
+    "date": "2023-01-13",
+    "productName": "Curry Powder Madras",
+    "quantity": 87,
+    "productPrice": 54020,
+    "CustomerId": 2
+  },
+  {
+    "date": "2023-01-22",
+    "productName": "Mahi Mahi",
+    "quantity": 33,
+    "productPrice": 25499,
+    "CustomerId": 2
+  },
+  {
+    "date": "2023-07-25",
+    "productName": "Coconut Milk - Unsweetened",
+    "quantity": 46,
+    "productPrice": 13215,
+    "CustomerId": 3
+  },
+  {
+    "date": "2023-07-01",
+    "productName": "Bacardi Breezer - Strawberry",
+    "quantity": 53,
+    "productPrice": 55711,
+    "CustomerId": 4
+  },
+  {
+    "date": "2023-09-29",
+    "productName": "Lamb - Bones",
+    "quantity": 55,
+    "productPrice": 26267,
+    "CustomerId": 2
+  },
+  {
+    "date": "2023-10-10",
+    "productName": "Island Oasis - Pina Colada",
+    "quantity": 70,
+    "productPrice": 77350,
+    "CustomerId": 4
+  }
+]
