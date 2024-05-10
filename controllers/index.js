@@ -5,16 +5,16 @@ const Order = require("../models/order");
 const View = require("../views");
 
 class Controller {
-  static async showCustomers() {
+  static async customers() {
     try {
-      const customers = await Customer.findAll();
-      View.showData(customers);
+      const users = await Customer.findAll();
+      View.showData(users);
     } catch (error) {
       View.showError(error);
     }
   }
 
-  static async showOrders() {
+  static async orders() {
     try {
       const orders = await Order.findAll();
       View.showOrders(orders);
@@ -23,57 +23,13 @@ class Controller {
     }
   }
 
-  static async showOrderById(id) {
+  static async order(id) {
     try {
       const order = await Order.findById(id);
       View.showOrder(order);
     } catch (error) {
       View.showError(error);
     }
-  }
-
-  static async showOrdersWeb(req, res) {
-    const { CustomerId } = req.query;
-
-    console.log(req.query);
-
-    try {
-      const orders = await Order.findAll(CustomerId);
-      res.send(orders);
-    } catch (error) {
-      res.send(error.message);
-      console.log(error);
-    }
-  }
-
-  static async showCustomersWeb(req, res) {
-    try {
-      const customers = await Customer.findAll();
-      res.send(customers);
-    } catch (error) {
-      res.send(error.message);
-      console.log(error);
-    }
-  }
-
-  static async showOrderByIdWeb(req, res) {
-    console.log(req.params);
-
-    try {
-      const order = await Order.findById(req.params.id);
-      res.json(order);
-    } catch (error) {
-      res.send(error.message);
-      console.log(error);
-    }
-  }
-
-  static home(req, res) {
-    res.send("Home");
-  }
-
-  static newOrder(req, res) {
-    res.send("New Order");
   }
 }
 

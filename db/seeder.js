@@ -13,27 +13,27 @@ const orders = JSON.parse(fs.readFileSync("./data/orders.json", "utf-8"))
   })
   .join(",\n");
 
-const queryInsertCustomers = `
+const queryCustomers = `
   INSERT INTO "Customers" ("name")
-  VALUES
-    ${customers}
+  VALUES ${customers}
   RETURNING *
 `;
 
-const queryInsertOrders = `
+const queryOrders = `
   INSERT INTO "Orders" ("date", "productName", "quantity", "productPrice", "CustomerId")
-  VALUES
-    ${orders}
+  VALUES ${orders}
   RETURNING *
 `;
 
-(async () => {
-  try {
-    const { rows: customers } = await pool.query(queryInsertCustomers);
-    console.table(customers);
-    const { rows: orders } = await pool.query(queryInsertOrders);
-    console.table(orders);
-  } catch (error) {
-    console.log(error.message);
-  }
-})();
+pool
+  .query(queryCustomers)
+  .then((result) => {
+    const { rows } = result;
+    console.table(rows);
+    return pool.query(queryOrders);
+  })
+  .then((result) => {
+    const { rows } = result;
+    console.table(rows);
+  })
+  .catch((err) => console.log(err.message));

@@ -10,81 +10,67 @@ class Order {
     quantity,
     productPrice,
     CustomerId,
+    status,
     customer
   ) {
     this.id = id;
-    this.date = date;
+    this.date = date; // data type = date
     this.productName = productName;
     this.quantity = quantity;
     this.productPrice = productPrice;
     this.CustomerId = CustomerId;
+    this.status = status;
     this.customer = customer;
   }
 
   get formattedDate() {
     return this.date.toLocaleString("id-ID", {
-      dateStyle: "short",
+      dateStyle: "medium",
     });
   }
 
-  get priceInRupiah() {
+  get formatedPrice() {
     return this.productPrice.toLocaleString("id-ID", {
       style: "currency",
       currency: "IDR",
     });
   }
 
-  static async findAll(CustomerId) {
-    let query = `
-      SELECT
-        o.*,
-        c.name AS "customer"
-      FROM "Orders" o
-      JOIN "Customers" c ON c.id = o."CustomerId" 
-    `;
-
-    if (CustomerId) {
-      query += `WHERE o."CustomerId" = ${CustomerId}`;
-    }
-
-    query += ` ORDER BY "date" DESC`;
-
-    const { rows } = await pool.query(query);
-    return rows.map((el) => {
-      const {
-        id,
-        date,
-        productName,
-        quantity,
-        productPrice,
-        CustomerId,
-        customer,
-      } = el;
-      return new Order(
-        id,
-        date,
-        productName,
-        quantity,
-        productPrice,
-        CustomerId,
-        customer
-      );
+  calculateTotalAmount() {
+    return (this.quantity * this.productPrice).toLocaleString("id-ID", {
+      style: "currency",
+      currency: "IDR",
     });
   }
 
-  static async findById(orderId) {
+  static async findAll() {
     const query = `
       SELECT
         o.*,
         c.name AS "customer"
       FROM "Orders" o
-      JOIN "Customers" c ON c.id = o."CustomerId" 
-      WHERE o.id = $1
+      JOIN "Customers" c ON c.id = o."CustomerId"
+      ORDER BY "date" DESC
     `;
+    const { rows } = await pool.query(query);
 
-    const { rows, rowCount } = await pool.query(query, [orderId]);
+    return rows.map((el) => {
+      return new Order(
+        el.id,
+        el.date,
+        el.productName,
+        el.quantity,
+        el.productPrice,
+        el.CustomerId,
+        el.status,
+        el.customer
+      );
+    });
+  }
 
-    if (rowCount == 0) throw new Error(`Order with id ${orderId} is not found`);
+  static async findById(orderId) {
+    const query = `SELECT * FROM "Orders" WHERE id = $1`;
+    const { rows } = await pool.query(query, [orderId]);
 
     const {
       id,
@@ -93,7 +79,7 @@ class Order {
       quantity,
       productPrice,
       CustomerId,
-      customer,
+      status,
     } = rows[0];
 
     return new Order(
@@ -103,7 +89,7 @@ class Order {
       quantity,
       productPrice,
       CustomerId,
-      customer
+      status
     );
   }
 }

@@ -1,17 +1,19 @@
 const Controller = require("./controllers");
-const [command, id] = process.argv.slice(2);
+
+const command = process.argv[2];
 
 switch (command) {
   case "customers":
-    Controller.showCustomers();
+    Controller.customers();
     break;
 
   case "orders":
-    Controller.showOrders();
+    Controller.orders();
     break;
 
   case "order":
-    Controller.showOrderById(id);
+    const id = process.argv[3];
+    Controller.order(id);
     break;
 
   default:

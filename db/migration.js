@@ -12,18 +12,18 @@ const orderDDL = `
     "id" SERIAL PRIMARY KEY,
     "date" DATE NOT NULL,
     "productName" VARCHAR(50) NOT NULL,
-    "quantity" INT NOT NULL,
-    "productPrice" INT NOT NULL,
-    "CustomerId" INT NOT NULL REFERENCES "Customers" (id)
+    "quantity" INTEGER NOT NULL,
+    "productPrice" INTEGER NOT NULL,
+    "CustomerId" INTEGER NOT NULL REFERENCES "Customers" ("id")
       ON DELETE CASCADE
-      ON UPDATE CASCADE
+      ON UPDATE CASCADE,
+    "status" BOOLEAN NOT NULL DEFAULT FALSE
   )
 `;
 
-async function migrate() {
+async function createTable() {
   try {
-    await pool.query('DROP TABLE IF EXISTS "Orders", "Customers"');
-    console.log(`Success drop tables`);
+    await pool.query(`DROP TABLE IF EXISTS "Orders", "Customers"`);
     await pool.query(customerDDL);
     console.log(`Success create table Customers`);
     await pool.query(orderDDL);
@@ -33,19 +33,4 @@ async function migrate() {
   }
 }
 
-migrate();
-
-// pool.query(customerDDL, (err, result) => {
-//   if (err) {
-//     console.log(err.message);
-//   } else {
-//     console.log(`Success create table Customers`);
-//     pool.query(orderDDL, (err, result) => {
-//       if (err) {
-//         console.log(err.message);
-//       } else {
-//         console.log(`Success create table Orders`);
-//       }
-//     });
-//   }
-// });
+createTable();

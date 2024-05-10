@@ -2,8 +2,7 @@
 
 const pool = require("../db/connection");
 
-// abstraksi class & logic crud untuk table Customer
-//! semua data yang keluar dari model harus berupa instance
+// ! Semua data yang keluar dari model harus berupa instance
 class Customer {
   constructor(id, name) {
     this.id = id;
