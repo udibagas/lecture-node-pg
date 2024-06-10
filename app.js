@@ -1,21 +1,10 @@
-const Controller = require("./controllers");
+const express = require("express");
+const app = express();
+const port = 3000;
 
-const command = process.argv[2];
+app.set("view engine", "ejs");
+app.use(require("./routes"));
 
-switch (command) {
-  case "customers":
-    Controller.customers();
-    break;
-
-  case "orders":
-    Controller.orders();
-    break;
-
-  case "order":
-    const id = process.argv[3];
-    Controller.order(id);
-    break;
-
-  default:
-    break;
-}
+app.listen(port, () => {
+  console.log(`Running on port ${port}`);
+});

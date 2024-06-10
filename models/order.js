@@ -1,6 +1,5 @@
-"use strict";
-
 const pool = require("../db/connection");
+const Customer = require("./customer");
 
 class Order {
   constructor(
@@ -10,50 +9,52 @@ class Order {
     quantity,
     productPrice,
     CustomerId,
-    status,
-    customer
+    customerName
   ) {
     this.id = id;
-    this.date = date; // data type = date
+    this.date = date;
     this.productName = productName;
-    this.quantity = quantity;
     this.productPrice = productPrice;
+    this.quantity = quantity;
     this.CustomerId = CustomerId;
-    this.status = status;
-    this.customer = customer;
+    this.customer = new Customer(CustomerId, customerName);
   }
 
   get formattedDate() {
-    return this.date.toLocaleString("id-ID", {
-      dateStyle: "medium",
-    });
+    return this.date.toLocaleString("id-ID", { dateStyle: "medium" });
   }
 
-  get formatedPrice() {
+  get priceInRupiah() {
     return this.productPrice.toLocaleString("id-ID", {
       style: "currency",
       currency: "IDR",
+      maximumFractionDigits: 0,
     });
   }
 
-  calculateTotalAmount() {
-    return (this.quantity * this.productPrice).toLocaleString("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    });
+  get customerName() {
+    return this.customer.name;
   }
 
-  static async findAll() {
-    const query = `
+  // ! semua data yang keluar dari model harus berupa instance!
+  static async findAll(CustomerId) {
+    let query = `
       SELECT
         o.*,
-        c.name AS "customer"
+        c."name" AS "customerName"
       FROM "Orders" o
       JOIN "Customers" c ON c.id = o."CustomerId"
+    `;
+
+    if (CustomerId) {
+      query += `WHERE "CustomerId" = ${CustomerId}`;
+    }
+
+    query += `
       ORDER BY "date" DESC
     `;
-    const { rows } = await pool.query(query);
 
+    const { rows } = await pool.query(query);
     return rows.map((el) => {
       return new Order(
         el.id,
@@ -62,35 +63,9 @@ class Order {
         el.quantity,
         el.productPrice,
         el.CustomerId,
-        el.status,
-        el.customer
+        el.customerName
       );
     });
-  }
-
-  static async findById(orderId) {
-    const query = `SELECT * FROM "Orders" WHERE id = $1`;
-    const { rows } = await pool.query(query, [orderId]);
-
-    const {
-      id,
-      date,
-      productName,
-      quantity,
-      productPrice,
-      CustomerId,
-      status,
-    } = rows[0];
-
-    return new Order(
-      id,
-      date,
-      productName,
-      quantity,
-      productPrice,
-      CustomerId,
-      status
-    );
   }
 }
 

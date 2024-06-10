@@ -1,5 +1,5 @@
 const fs = require("fs");
-const pool = require("./connection");
+const pool = require("../db/connection");
 
 const customers = JSON.parse(fs.readFileSync("./data/customers.json", "utf-8"))
   .map((el) => {
@@ -15,25 +15,27 @@ const orders = JSON.parse(fs.readFileSync("./data/orders.json", "utf-8"))
 
 const queryCustomers = `
   INSERT INTO "Customers" ("name")
-  VALUES ${customers}
+  VALUES
+    ${customers}
   RETURNING *
 `;
 
 const queryOrders = `
   INSERT INTO "Orders" ("date", "productName", "quantity", "productPrice", "CustomerId")
-  VALUES ${orders}
+  VALUES
+    ${orders}
   RETURNING *
 `;
 
-pool
-  .query(queryCustomers)
-  .then((result) => {
-    const { rows } = result;
+// console.log(queryOrders);
+
+(async () => {
+  try {
+    const { rows } = await pool.query(queryCustomers);
     console.table(rows);
-    return pool.query(queryOrders);
-  })
-  .then((result) => {
-    const { rows } = result;
-    console.table(rows);
-  })
-  .catch((err) => console.log(err.message));
+    const { rows: orders } = await pool.query(queryOrders); // Result : rows
+    console.table(orders);
+  } catch (error) {
+    console.log(error.message);
+  }
+})();
