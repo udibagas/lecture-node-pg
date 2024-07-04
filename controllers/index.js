@@ -1,6 +1,10 @@
+const Order = require("../models/order");
+const View = require("../views");
+
 class Controller {
-  static home(req, res) {
-    res.render("home");
+  static async showOrders() {
+    const orders = await Order.getOrders();
+    View.showOrders(orders);
   }
 }
 
