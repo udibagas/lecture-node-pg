@@ -13,6 +13,10 @@ class View {
       })
     );
   }
+
+  static showError(err) {
+    console.log(err.message);
+  }
 }
 
 module.exports = View;

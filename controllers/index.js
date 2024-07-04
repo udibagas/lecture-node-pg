@@ -3,8 +3,12 @@ const View = require("../views");
 
 class Controller {
   static async showOrders() {
-    const orders = await Order.getOrders();
-    View.showOrders(orders);
+    try {
+      const orders = await Order.getOrders();
+      View.showOrders(orders);
+    } catch (error) {
+      View.showError(error);
+    }
   }
 }
 
