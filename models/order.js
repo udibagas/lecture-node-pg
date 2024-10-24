@@ -1,5 +1,4 @@
 const pool = require("../db/connection");
-const Customer = require("./customer");
 
 class Order {
   constructor(
@@ -9,7 +8,7 @@ class Order {
     quantity,
     productPrice,
     CustomerId,
-    customerName
+    customer
   ) {
     this.id = id;
     this.date = date;
@@ -17,30 +16,30 @@ class Order {
     this.quantity = quantity;
     this.productPrice = productPrice;
     this.CustomerId = CustomerId;
-    this.customer = new Customer(CustomerId, customerName);
+    this.customer = customer;
   }
 
   get formattedDate() {
-    return this.date.toLocaleString("id-ID", {
-      dateStyle: "medium",
-    });
+    return this.date.toLocaleString("id-ID", { dateStyle: "short" });
   }
 
-  getPriceInRupiah() {
+  get priceInRupiah() {
     return this.productPrice.toLocaleString("id-ID", {
       style: "currency",
       currency: "IDR",
     });
   }
 
-  static async getOrders() {
+  static async findAll() {
     const { rows } = await pool.query(`
-      SELECT 
-        o.*, 
-        c.name AS "customerName"
+      SELECT
+        o.*,
+        c.name AS "customer"
       FROM "Orders" o
       JOIN "Customers" c ON c.id = o."CustomerId"
+      ORDER BY "date" DESC
     `);
+
     return rows.map((el) => {
       return new Order(
         el.id,
@@ -49,7 +48,7 @@ class Order {
         el.quantity,
         el.productPrice,
         el.CustomerId,
-        el.customerName
+        el.customer
       );
     });
   }
